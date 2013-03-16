@@ -12,12 +12,14 @@
 插入符的位置.
 ###
 ( (factory) ->
-  if typeof exports is 'object'
-    # Node/CommonJS
-    factory require('jquery')
-  else if typeof define is 'function' and define.amd
+  # Uses AMD or browser globals to create a jQuery plugin.
+  # It does not try to register in a CommonJS environment since
+  # jQuery is not likely to run in those environments.
+  #
+  # form [umd](https://github.com/umdjs/umd) project
+  if typeof define is 'function' and define.amd
     # Register as an anonymous AMD module:
-    define ['jquery']
+    define ['jquery'], factory
   else
     # Browser globals
     factory window.jQuery
